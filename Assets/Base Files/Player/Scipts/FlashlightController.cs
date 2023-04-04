@@ -10,11 +10,14 @@ public class FlashlightController : MonoBehaviour
     [SerializeField] GameObject flashLight;
 
     [Header("Torch Variables")]
-    [SerializeField] private float range, spotAngle, intensity;
+    [SerializeField] private float range;
+    [SerializeField] private float spotAngle;
+    [SerializeField] private float intensity;
     [Header("bat Variables")]
     [SerializeField] private float batLifeDuration;
     [SerializeField] bool randomBatReload;
-    [SerializeField] private float maxBatReload, minBatReload;
+    [SerializeField] private float maxBatReload;
+    [SerializeField] private float minBatReload;
 
     private float maxBat = 100f, curBat, batDrainPerSecond, batReloadAmount;
     private bool hasTorch, flashOn;

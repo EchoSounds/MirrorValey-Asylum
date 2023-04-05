@@ -19,8 +19,8 @@ public class FlashlightController : MonoBehaviour
     [SerializeField] private float maxBatReload;
     [SerializeField] private float minBatReload;
 
-    private float maxBat = 100f, curBat, batDrainPerSecond, batReloadAmount;
-    private bool hasTorch, flashOn;
+    private float maxBat = 100f, curBat = 100f, batDrainPerSecond, batReloadAmount;
+    private bool equiped, flashOn = false;
     private Light flash;
 
     private void Awake()
@@ -38,20 +38,24 @@ public class FlashlightController : MonoBehaviour
 
     private void Start()
     {
-        flash = flashLight.gameObject.GetComponent<Light>();
         batDrainPerSecond = maxBat / batLifeDuration;
+        flashLight.gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        if (playerInputs.Player.FlashLight.WasPressedThisFrame())
+        if (equiped)
         {
-            ToggleFlashLight();
-        }
+            if (playerInputs.Player.FlashLight.triggered)
+            {
+                ToggleFlashLight();
+                Debug.Log("pog");
+            }
 
-        if (flashOn)
-        {
-            curBat -= batDrainPerSecond * Time.deltaTime;
+            if (flashOn)
+            {
+                curBat -= batDrainPerSecond * Time.deltaTime;
+            }
         }
     }
 
@@ -62,18 +66,17 @@ public class FlashlightController : MonoBehaviour
     }
     private void ToggleFlashLight()
     {
-        if (flashOn)
+        if (flashOn == true)
         {
-            flash.enabled = false;
+            flashLight.gameObject.SetActive(false);
             flashOn = false;
-        } else
+        } else if (flashOn == false)
         {
-            if(curBat <= 0)
+            if(curBat < 0)
             {
                 return;
             }
-
-            flash.enabled = true;
+            flashLight.gameObject.SetActive(true);
             flashOn = true;
         }
     }

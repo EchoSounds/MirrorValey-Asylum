@@ -5,6 +5,7 @@ using UnityEngine.InputSystem;
 public class CamOrientation : MonoBehaviour
 {
     [SerializeField] private GameObject targetObject;
+    [SerializeField] bool followX, followY, followZ;
 
 
     // Update is called once per frame
@@ -17,8 +18,9 @@ public class CamOrientation : MonoBehaviour
 
             // Set the current object's y rotation to match the target object's y rotation
             Vector3 eulerAngles = transform.rotation.eulerAngles;
-            eulerAngles.y = targetRotation.eulerAngles.y;
-            eulerAngles.z = targetRotation.eulerAngles.z;
+            if(followX)eulerAngles.x = targetRotation.eulerAngles.x;
+            if(followY)eulerAngles.y = targetRotation.eulerAngles.y;
+            if(followZ)eulerAngles.z = targetRotation.eulerAngles.z;
             transform.rotation = Quaternion.Euler(eulerAngles);
         }
         else if (targetObject == null)

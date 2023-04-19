@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class VisionCone : MonoBehaviour
@@ -20,18 +21,14 @@ public class VisionCone : MonoBehaviour
             {
                 Vector3 dirToTarget = (targetCollider.transform.position - transform.position).normalized;
 
-                Debug.Log("InRangeofEnemy");
-
                 if (Vector3.Angle(dirToTarget, transform.forward) < viewAngle / 2)
                 {
                     float distToTarget = Vector3.Distance(targetCollider.transform.position, transform.position);
 
-                    Debug.Log("Enemy in vision cone"); 
-
                     if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask))
                     {
                         // The player can see the enemy within the vision cone
-                        Debug.Log("Enemy seen");
+                        targetCollider.GetComponent<MedEnemyController>().EnterVisionCone();
                     }
                 }
             }
@@ -50,6 +47,4 @@ public class VisionCone : MonoBehaviour
         Gizmos.DrawRay(transform.position, leftBoundary * viewRadius);
         Gizmos.DrawRay(transform.position, rightBoundary * viewRadius);
     }
-
-
 }
